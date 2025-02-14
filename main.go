@@ -87,6 +87,11 @@ const (
 Ответ: https://www.instagram.com/share/reel/_lfA275hE
 
 `
+	Msg11 = `
+Знаешь что делает мой день лучше?
+
+Ответ: https://www.instagram.com/share/reel/_kgBsw3lD
+`
 )
 
 func main() {
@@ -117,6 +122,7 @@ func main() {
 	btn8 := selector.Data("Нажми и узнаешь", "8")
 	btn9 := selector.Data("Нажми и узнаешь", "9")
 	btn10 := selector.Data("Нажми и узнаешь", "10")
+	btn11 := selector.Data("Нажми и узнаешь", "11")
 
 	b.Handle("/start", func(c tele.Context) error {
 		count = 0
@@ -133,6 +139,7 @@ func main() {
 			selector.Row(btn8),
 			selector.Row(btn9),
 			selector.Row(btn10),
+			selector.Row(btn11),
 		)
 		selector2.Inline(selector2.Row(cbtn))
 		return c.Send(HelloMessage, selector)
@@ -287,6 +294,20 @@ func main() {
 		return c.Send(Msg10, selector2)
 	})
 
+	b.Handle(&btn11, func(c tele.Context) error {
+		b := selector.InlineKeyboard[10][0]
+		if b.Text != "Это ты уже знаешь, зайка" {
+			count += 1
+		}
+		b.Text = "Это ты уже знаешь, зайка"
+		selector.InlineKeyboard[10][0] = b
+		if count == 10 {
+			b2 := selector2.InlineKeyboard[0][0]
+			b2.Text = "Осталось нажать еще один раз..."
+			selector2.InlineKeyboard[0][0] = b2
+		}
+		return c.Send(Msg11, selector2)
+	})
 	b.Handle(&cbtn, func(c tele.Context) error {
 		if count == 10 {
 			return c.Send(Fmsg)
