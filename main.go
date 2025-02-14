@@ -299,7 +299,7 @@ func main() {
 	})
 
 	b.Handle("/new", func(c tele.Context) error {
-		return c.Send("Something new for you", selector3)
+		return c.Send("Что то, что я еще хочу сказать тебе, Зайка", selector3)
 	})
 
 	b.Handle(&btn11, func(c tele.Context) error {
