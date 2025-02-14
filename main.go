@@ -110,6 +110,7 @@ func main() {
 
 	var selector *tele.ReplyMarkup
 	var selector2 *tele.ReplyMarkup
+	var selector3 *tele.ReplyMarkup
 
 	cbtn := selector.Data("Нажми и продолжим, зайка", "c")
 	btn1 := selector.Data("Нажми и узнаешь", "1")
@@ -122,12 +123,13 @@ func main() {
 	btn8 := selector.Data("Нажми и узнаешь", "8")
 	btn9 := selector.Data("Нажми и узнаешь", "9")
 	btn10 := selector.Data("Нажми и узнаешь", "10")
-	btn11 := selector.Data("Нажми и узнаешь", "11")
+	btn11 := selector.Data("Что новенькое для тебя)", "11")
 
 	b.Handle("/start", func(c tele.Context) error {
 		count = 0
 		selector = &tele.ReplyMarkup{}
 		selector2 = &tele.ReplyMarkup{}
+		selector3 = &tele.ReplyMarkup{}
 		selector.Inline(
 			selector.Row(btn1),
 			selector.Row(btn2),
@@ -139,9 +141,11 @@ func main() {
 			selector.Row(btn8),
 			selector.Row(btn9),
 			selector.Row(btn10),
-			selector.Row(btn11),
 		)
 		selector2.Inline(selector2.Row(cbtn))
+		selector3.Inline(
+			selector.Row(btn11),
+		)
 		return c.Send(HelloMessage, selector)
 	})
 
@@ -294,20 +298,14 @@ func main() {
 		return c.Send(Msg10, selector2)
 	})
 
-	b.Handle(&btn11, func(c tele.Context) error {
-		b := selector.InlineKeyboard[10][0]
-		if b.Text != "Это ты уже знаешь, зайка" {
-			count += 1
-		}
-		b.Text = "Это ты уже знаешь, зайка"
-		selector.InlineKeyboard[10][0] = b
-		if count == 10 {
-			b2 := selector2.InlineKeyboard[0][0]
-			b2.Text = "Осталось нажать еще один раз..."
-			selector2.InlineKeyboard[0][0] = b2
-		}
-		return c.Send(Msg11, selector2)
+	b.Handle("/new", func(c tele.Context) error {
+		return c.Send("Something new for you", selector3)
 	})
+
+	b.Handle(&btn11, func(c tele.Context) error {
+		return c.Send(Msg11)
+	})
+
 	b.Handle(&cbtn, func(c tele.Context) error {
 		if count == 10 {
 			return c.Send(Fmsg)
