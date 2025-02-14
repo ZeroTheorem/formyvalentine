@@ -122,7 +122,7 @@ func main() {
 	btn8 := selector.Data("Нажми и узнаешь", "8")
 	btn9 := selector.Data("Нажми и узнаешь", "9")
 	btn10 := selector.Data("Нажми и узнаешь", "10")
-	btn11 := selector.Data("Что новенькое для тебя)", "11")
+	btn11 := selector.Data("Что новенькое для тебя", "11")
 
 	selector3 := &tele.ReplyMarkup{}
 	selector3.Inline(
