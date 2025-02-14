@@ -303,6 +303,9 @@ func main() {
 	})
 
 	b.Handle(&btn11, func(c tele.Context) error {
+		b := selector3.InlineKeyboard[0][0]
+		b.Text = "Уже не новенькое"
+		selector3.InlineKeyboard[0][0] = b
 		return c.Send(Msg11)
 	})
 
