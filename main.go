@@ -110,7 +110,6 @@ func main() {
 
 	var selector *tele.ReplyMarkup
 	var selector2 *tele.ReplyMarkup
-	var selector3 *tele.ReplyMarkup
 
 	cbtn := selector.Data("Нажми и продолжим, зайка", "c")
 	btn1 := selector.Data("Нажми и узнаешь", "1")
@@ -125,11 +124,15 @@ func main() {
 	btn10 := selector.Data("Нажми и узнаешь", "10")
 	btn11 := selector.Data("Что новенькое для тебя)", "11")
 
+	selector3 := &tele.ReplyMarkup{}
+	selector3.Inline(
+		selector.Row(btn11),
+	)
+
 	b.Handle("/start", func(c tele.Context) error {
 		count = 0
 		selector = &tele.ReplyMarkup{}
 		selector2 = &tele.ReplyMarkup{}
-		selector3 = &tele.ReplyMarkup{}
 		selector.Inline(
 			selector.Row(btn1),
 			selector.Row(btn2),
@@ -143,9 +146,6 @@ func main() {
 			selector.Row(btn10),
 		)
 		selector2.Inline(selector2.Row(cbtn))
-		selector3.Inline(
-			selector.Row(btn11),
-		)
 		return c.Send(HelloMessage, selector)
 	})
 
