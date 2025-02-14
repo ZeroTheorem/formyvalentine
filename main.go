@@ -88,7 +88,7 @@ const (
 
 `
 	Msg11 = `
-Знаешь что делает мой день лучше?
+Знаешь, что делает мой день лучше?
 
 Ответ: https://www.instagram.com/share/reel/_kgBsw3lD
 `
